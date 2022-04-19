@@ -16,6 +16,4 @@ public class Formula {
         formula = _formula;
     }
 
-
-
 }

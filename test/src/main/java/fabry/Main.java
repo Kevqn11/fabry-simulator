@@ -152,7 +152,7 @@ public class Main extends Application {
 
     public void initialize() {
         graphTabVector = new Vector<GraphTab>();
-        plusTabIndex=1;
+        plusTabIndex=0;
         plusTab.setOnSelectionChanged(new EventHandler<Event>() {
             @Override
             public void handle(Event event) {
@@ -475,14 +475,16 @@ public class Main extends Application {
                 I_incident.addFormula(f);
             }
         }
+
+        newTab();
     }
 
 
 
     @Override
     public void start(Stage stage) throws Exception{
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("HelloFX.fxml")));
-        stage.setTitle("titleaavd");
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("layout.fxml")));
+        stage.setTitle("Fabry Perot Simulator");
         Scene scene = new Scene(root, 1200,800);
         stage.setScene(scene);
         stage.show();

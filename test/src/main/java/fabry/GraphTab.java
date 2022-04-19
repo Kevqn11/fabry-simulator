@@ -87,6 +87,12 @@ public class GraphTab {
 
     }
 
+    public void updateTabName() {
+        if (x_var!=null && y_var!=null) {
+            tab.setText(String.format("%s vs %s", x_var.symbol, y_var.symbol));
+        }
+    }
+
 
 
 
@@ -118,19 +124,22 @@ public class GraphTab {
 
         axis_x = new NumberAxis(0, 100, 10);
         axis_y = new NumberAxis(0, 100, 10);
+        axis_x.setLabel("");
+        axis_y.setLabel("");
         chart = new LineChart(axis_x, axis_y);
         chart.setCreateSymbols(false);
         chart.setAnimated(false);
         chart.getXAxis().setAutoRanging(true);
         chart.getYAxis().setAutoRanging(true);
+        chart.setLegendVisible(false);
 
         tab.setContent(vbox);
         vbox.getChildren().addAll(anchorPane, chart, label_error);
 
-        AnchorPane.setLeftAnchor(label_x, 582.0);
+        AnchorPane.setLeftAnchor(label_x, 400.0);
         AnchorPane.setTopAnchor(label_x, 12.0);
 
-        AnchorPane.setRightAnchor(label_y, 582.0);
+        AnchorPane.setRightAnchor(label_y, 400.0);
         AnchorPane.setTopAnchor(label_y, 12.0);
 
         AnchorPane.setLeftAnchor(choiceBox_x, 238.0);
@@ -154,6 +163,7 @@ public class GraphTab {
         choiceBox_x.valueProperty().addListener((observable, old_value, new_value) -> {
             if (!new_value.equals(old_value)){
                 x_var = this.choices.get(new_value);
+                updateTabName();
                 graph();
 
             }
@@ -161,6 +171,7 @@ public class GraphTab {
         choiceBox_y.valueProperty().addListener((observable, old_value, new_value) -> {
             if (!new_value.equals(old_value)){
                 y_var = this.choices.get(new_value);
+                updateTabName();
                 graph();
 
             }
@@ -196,9 +207,9 @@ public class GraphTab {
                 series.getData().add(new XYChart.Data<Double, Double>(x_var.value/x_var.unit, y_var.value/y_var.unit));
             }
         } catch (Exceptions.UnfulfilledDependenciesException err) {
-            label_error.setText("Unfulfilled.");
+            label_error.setText("Unfulfilled Dependency Error.");
         } catch (Exceptions.MathError err) {
-            label_error.setText("MathError");
+            label_error.setText("Math Error");
         }
 
         chart.getData().clear();
